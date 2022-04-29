@@ -1,12 +1,14 @@
 import React from 'react';
+import * as api from '../../api/jobApplications';
 import debounce from 'lodash.debounce';
 
-export default function SearchCriteria() {
+export default function SearchCriteria({ setResults }) {
   const jobTitleRef = React.useRef();
   const jobLocRef = React.useRef();
 
   const handleChange = () => {
-    console.log(jobTitleRef.current.value, jobTitleRef.current.value)
+    api.searchForJobApplications(jobTitleRef.current.value || "anything", jobLocRef.current.value || "anywhere")
+      .then((data) => setResults(data));
   }
 
   const debouncedChangeHandler = React.useMemo(() => debounce(handleChange, 300), []);
