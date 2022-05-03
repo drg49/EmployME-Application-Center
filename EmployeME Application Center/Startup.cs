@@ -1,6 +1,8 @@
+using EmployeME_Application_Center.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +23,8 @@ namespace EmployeME_Application_Center
         {
 
             services.AddControllersWithViews();
+
+            services.AddDbContext<EmployMeDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

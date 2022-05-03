@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EmployeME_Application_Center.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace EmployeME_Application_Center.Models
+namespace EmployeME_Application_Center.Data
 {
-    public partial class EmployMeContext : DbContext
+    public partial class EmployMeDbContext : DbContext
     {
-        public EmployMeContext()
-        {
-        }
 
-        public EmployMeContext(DbContextOptions<EmployMeContext> options)
+        public EmployMeDbContext(DbContextOptions<EmployMeDbContext> options)
             : base(options)
         {
         }
@@ -18,14 +16,6 @@ namespace EmployeME_Application_Center.Models
         public virtual DbSet<JobApplications> JobApplications { get; set; }
         public virtual DbSet<Reminders> Reminders { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=ANONYMOUS\\SQLEXPRESS;Initial Catalog=EmployMe;Integrated Security=True;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
