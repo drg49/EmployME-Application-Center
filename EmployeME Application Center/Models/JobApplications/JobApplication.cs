@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EmployeME_Application_Center.Models
+namespace EmployeME_Application_Center.Models.JobApplications
 {
-    public partial class JobApplications
+    public partial class JobApplication
     {
-        public JobApplications()
+        public JobApplication()
         {
             CustomJobAppQuestions = new HashSet<CustomJobAppQuestions>();
         }

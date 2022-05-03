@@ -7,7 +7,7 @@ export default function SearchCriteria({ setResults }) {
   const jobLocRef = React.useRef();
 
   const handleChange = () => {
-    api.searchForJobApplications(jobTitleRef.current.value || "anything", jobLocRef.current.value || "anywhere")
+    api.searchForJobApplications(jobTitleRef.current.value, jobLocRef.current.value)
       .then((data) => setResults(data));
   }
 

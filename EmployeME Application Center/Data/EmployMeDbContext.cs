@@ -1,11 +1,11 @@
 ﻿using EmployeME_Application_Center.Models;
+using EmployeME_Application_Center.Models.JobApplications;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeME_Application_Center.Data
 {
     public partial class EmployMeDbContext : DbContext
     {
-
         public EmployMeDbContext(DbContextOptions<EmployMeDbContext> options)
             : base(options)
         {
@@ -13,7 +13,7 @@ namespace EmployeME_Application_Center.Data
 
         public virtual DbSet<CustomJobAppQuestions> CustomJobAppQuestions { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<JobApplications> JobApplications { get; set; }
+        public virtual DbSet<JobApplication> JobApplications { get; set; }
         public virtual DbSet<Reminders> Reminders { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -67,7 +67,7 @@ namespace EmployeME_Application_Center.Data
                     .HasConstraintName("FK__Employee__UserId__31EC6D26");
             });
 
-            modelBuilder.Entity<JobApplications>(entity =>
+            modelBuilder.Entity<JobApplication>(entity =>
             {
                 entity.HasKey(e => e.AppId)
                     .HasName("PK__JobAppli__8E2CF7F9E637457E");

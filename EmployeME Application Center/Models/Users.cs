@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeME_Application_Center.Models.JobApplications;
+using System;
 using System.Collections.Generic;
 
 namespace EmployeME_Application_Center.Models
@@ -8,7 +9,7 @@ namespace EmployeME_Application_Center.Models
         public Users()
         {
             Employee = new HashSet<Employee>();
-            JobApplications = new HashSet<JobApplications>();
+            JobApplications = new HashSet<JobApplication>();
             Reminders = new HashSet<Reminders>();
         }
 
@@ -22,7 +23,7 @@ namespace EmployeME_Application_Center.Models
         public DateTime? UploadDate { get; set; }
 
         public virtual ICollection<Employee> Employee { get; set; }
-        public virtual ICollection<JobApplications> JobApplications { get; set; }
+        public virtual ICollection<JobApplication> JobApplications { get; set; }
         public virtual ICollection<Reminders> Reminders { get; set; }
     }
 }

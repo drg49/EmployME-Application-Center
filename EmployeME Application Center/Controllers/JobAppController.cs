@@ -1,7 +1,6 @@
 ﻿using EmployeME_Application_Center.Data;
-using EmployeME_Application_Center.Models;
+using EmployeME_Application_Center.Models.JobApplications;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EmployeME_Application_Center.Controllers
@@ -16,11 +15,28 @@ namespace EmployeME_Application_Center.Controllers
             _context = context;
         }
 
-        [HttpGet("search/{jobTitle}/{jobLocation}")]
-        public List<string> JobAppSearch([FromRoute] string jobTitle, [FromRoute] string jobLocation)
+        [HttpPost("search")]
+        public IQueryable<JobApplication> JobAppSearch([FromBody] JobAppSearchRequest request)
         {
-            Users test = _context.Users.FirstOrDefault((record) => record.FirstName == "Daniel");
-            return new List<string>() { "11", "22", "33" };
+            IQueryable<JobApplication> results = Enumerable.Empty<JobApplication>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(request.JobTitle) && !string.IsNullOrEmpty(request.JobLocation))
+            {
+                results = from job in _context.JobApplications
+                            where job.JobTitle.StartsWith(request.JobTitle)
+                            && job.JobLocation.StartsWith(request.JobLocation)
+                            select job;
+            }
+            else if (string.IsNullOrEmpty(request.JobLocation))
+            {
+                results = _context.JobApplications.Where((job) => job.JobTitle.StartsWith(request.JobTitle));
+            }
+            else if (string.IsNullOrEmpty(request.JobTitle))
+            {
+                results = _context.JobApplications.Where((job) => job.JobLocation.StartsWith(request.JobLocation));
+            }
+
+            return results;
         }
     }
 }

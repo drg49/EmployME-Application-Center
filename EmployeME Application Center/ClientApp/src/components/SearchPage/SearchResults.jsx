@@ -7,7 +7,9 @@ export default function SearchResults({ results }) {
     setResultUI(results?.map((item, index) => {
       return (
         <div key={index}>
-          {item}
+          {item.jobTitle}
+          {item.jobLocation}
+          {item.companyName}
         </div>
       )
     }));

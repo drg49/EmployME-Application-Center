@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeME_Application_Center.Models.JobApplications;
+using System;
 using System.Collections.Generic;
 
 namespace EmployeME_Application_Center.Models
@@ -12,6 +13,6 @@ namespace EmployeME_Application_Center.Models
         public DateTime? UploadDate { get; set; }
         public string AppId { get; set; }
 
-        public virtual JobApplications App { get; set; }
+        public virtual JobApplication App { get; set; }
     }
 }
