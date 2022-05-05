@@ -17,6 +17,17 @@ textarea:focus, input:focus{
     outline: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 button:hover {
     opacity: 0.85;
+}
+
+.em-global-add-btn {
+    border: none;
+    border-radius: 3px;
+    background-color: green;
+    color: white;
 }

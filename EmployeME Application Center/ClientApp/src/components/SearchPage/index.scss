@@ -1,0 +1,38 @@
+#job-app-card {
+  border: 1px solid blue;
+  border-radius: 4px;
+  max-width: 400px;
+  text-align: left;
+  margin: 18px auto;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+    p {
+      margin: 0px;
+    }
+
+    button {
+      padding: 5px 8px;
+    }
+}
+
+#search-criteria {
+  border: 1px solid black;
+  max-width: 490px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  border-radius: 6px;
+  border-color: rgb(211, 199, 183);
+  background-color: antiquewhite;
+  
+    input {
+      text-align: center;
+      width: 12rem;
+      padding: 6px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+}

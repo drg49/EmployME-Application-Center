@@ -3,8 +3,11 @@ import SearchCriteria from './SearchCriteria';
 import * as api from '../../api/jobApplications';
 import SearchResults from './SearchResults';
 
+import './index.scss'
+
 export default function SearchPage(props) {
-  const [results, setResults] = React.useState();
+  const [results, setResults] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const jobTitle = props.match.params.jobTitle;
   const jobLocation = props.match.params.jobLocation;
@@ -18,8 +21,8 @@ export default function SearchPage(props) {
 
   return (
     <>
-      <SearchCriteria setResults={setResults} />
-      <SearchResults results={results} />
+      <SearchCriteria setResults={setResults} setIsLoading={setIsLoading} />
+      <SearchResults results={results} isLoading={isLoading} />
     </>
   );
 }

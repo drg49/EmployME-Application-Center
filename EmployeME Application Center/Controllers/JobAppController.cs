@@ -33,7 +33,7 @@ namespace EmployeME_Application_Center.Controllers
             }
             else if (string.IsNullOrEmpty(request.JobTitle))
             {
-                results = _context.JobApplications.Where((job) => job.JobLocation.StartsWith(request.JobLocation));
+                results = _context.JobApplications.Where((job) => job.JobLocation.Contains(request.JobLocation));
             }
 
             return results;
