@@ -16,6 +16,6 @@ namespace EmployME_Application_Center.Models.Users
         public string Email { get; set; }
         public string Password { get; set; }
         public string Birthday { get; set; }
-        public DateTime? UploadDate { get; set; }
+        public DateTime? UploadDate { get; set; } = DateTime.Now;
     }
 }

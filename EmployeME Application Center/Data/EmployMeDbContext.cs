@@ -14,7 +14,7 @@ namespace EmployME_Application_Center.Data
         }
 
         public virtual DbSet<JobApplication> JobApplications { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> AppCenterUsers { get; set; }
 
         protected void OnModelCreating(EF6.DbModelBuilder modelBuilder)
         {

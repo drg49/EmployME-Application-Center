@@ -6,7 +6,7 @@ using EmployME_Application_Center.Data;
 using EmployME_Application_Center.Models.Users;
 using Microsoft.IdentityModel.Tokens;
 
-namespace EmployME_Application_Center.Authentication
+namespace EmployME_Application_Center.Security
 {
     public class JwtService
     {
@@ -43,7 +43,7 @@ namespace EmployME_Application_Center.Authentication
             }, out SecurityToken validatedToken);
 
             int id = int.Parse(validatedToken.Issuer);
-            User user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            User user = _context.AppCenterUsers.FirstOrDefault(u => u.UserId == id);
 
             return user;
         }
