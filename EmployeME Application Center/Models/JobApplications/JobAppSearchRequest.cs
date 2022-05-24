@@ -1,5 +1,5 @@
 ﻿
-namespace EmployeME_Application_Center.Models.JobApplications
+namespace EmployME_Application_Center.Models.JobApplications
 {
     public class JobAppSearchRequest
     {

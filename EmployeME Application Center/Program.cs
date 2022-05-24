@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeME_Application_Center
+namespace EmployME_Application_Center
 {
     public class Program
     {

@@ -1,4 +1,4 @@
-using EmployeME_Application_Center.Data;
+using EmployME_Application_Center.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace EmployeME_Application_Center
+namespace EmployME_Application_Center
 {
     public class Startup
     {

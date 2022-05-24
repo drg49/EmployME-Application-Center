@@ -5,6 +5,7 @@ import JobApplication from './components/JobApplication';
 import SearchPage from './components/SearchPage';
 import NotFound from './components/NotFound';
 import NavBar from './components/NavBar';
+import UserAccount from './components/UserAccount';
 import './index.css'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         />
         <Route path="/search/:jobTitle/:jobLocation" render={(rp) => <SearchPage {...rp} />} />
         <Route path="/search" render={(rp) => <SearchPage {...rp} />} />
+        <Route path="/my-profile" render={(rp) => <UserAccount {...rp}/>} />
         <Route path='*' render={(rp) =>  <NotFound {...rp}/>} />
       </Switch>
     </main>

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace EmployeME_Application_Center.Models.JobApplications
+namespace EmployME_Application_Center.Models.JobApplications
 {
+    /// <summary>
+    /// Job applications posted by companies
+    /// </summary>
     public partial class JobApplication
     {
-        public JobApplication()
-        {
-            CustomJobAppQuestions = new HashSet<CustomJobAppQuestions>();
-        }
-
+        [Key]
         public string AppId { get; set; }
         public string DefaultQuestions { get; set; }
         public string CompanyName { get; set; }
@@ -18,8 +17,7 @@ namespace EmployeME_Application_Center.Models.JobApplications
         public DateTime? UploadDate { get; set; }
         public int? UserId { get; set; }
         public string Status { get; set; }
-
-        public virtual Users User { get; set; }
-        public virtual ICollection<CustomJobAppQuestions> CustomJobAppQuestions { get; set; }
+        //public virtual Users User { get; set; }
+        //public virtual ICollection<CustomJobAppQuestions> CustomJobAppQuestions { get; set; }
     }
 }
