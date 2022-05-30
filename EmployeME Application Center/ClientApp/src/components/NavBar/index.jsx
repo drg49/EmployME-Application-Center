@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserTie, faBriefcase, faClipboard, faSearch } from '@fortawesome/free-solid-svg-icons'
 import "./index.scss"
 
-const findJobsIcon = <FontAwesomeIcon icon={faSearch} color="gray" size="md" />;
-const postJobsIcon = <FontAwesomeIcon icon={faClipboard} color="gray" size="md" />;
-const careersIcon = <FontAwesomeIcon icon={faBriefcase} color="gray" size="md" />;
-const userIcon = <FontAwesomeIcon icon={faUserTie} color="gray" size="md" />;
+const findJobsIcon = <FontAwesomeIcon icon={faSearch} color="gray" />;
+const postJobsIcon = <FontAwesomeIcon icon={faClipboard} color="gray" />;
+const careersIcon = <FontAwesomeIcon icon={faBriefcase} color="gray" />;
+const userIcon = <FontAwesomeIcon icon={faUserTie} color="gray" />;
 
 export default function NavBar() {
   return (

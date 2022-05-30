@@ -11,12 +11,13 @@ export default function UserAccount() {
     <>
       {pageState === "default" ? (
       <>
-        <button onClick={() => setPageState("login")}>Login</button>
-        <button onClick={() => setPageState("signup")}>Sign up</button>
+        <h1>Your Journey Starts Here</h1>
+        <button onClick={() => setPageState("login")} id="login-btn">Login</button>
+        <button onClick={() => setPageState("signup")}id="sign-up-btn">Sign up</button>
       </>
       ) : null}
-      {pageState === "login" ? <Login /> : null}
-      {pageState === "signup" ? <SignUp /> : null}
+      {pageState === "login" ? <Login setPageState={setPageState} /> : null}
+      {pageState === "signup" ? <SignUp setPageState={setPageState} /> : null}
     </>
   )
 }
