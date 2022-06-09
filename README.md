@@ -1,5 +1,3 @@
-# EmployME-Application-Center
-The Application Center of EmployME
 # EmployME Application Center
 
 EmployME Application Center is a .NET/React application that allows users to apply to posted job applications.
