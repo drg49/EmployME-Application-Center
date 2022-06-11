@@ -9,23 +9,18 @@ import UserAccount from './components/UserAccount';
 import Toast from './components/Toasts';
 import * as api from './api/authentication';
 import './index.css'
-import { useHistory } from 'react-router-dom';
 
 export const GlobalCtx = React.createContext(null)
 
 export default function App() {
-  const history = useHistory(); 
-
   const [globalState, setGlobalState] = React.useState({
-    userInformation: {},
-    isLoggedIn: false
+    userInfo: {},
+    isLoggedIn: null
   });
 
-  // Remove this useEffect here and instead place it in <Home />
   React.useEffect(() => {
     api.validateUser()
-      .then((data) => {
-        console.log(data)
+      .then(() => {
         setGlobalState({ ...globalState, isLoggedIn: true })
       })
       .catch(() => setGlobalState({ ...globalState, isLoggedIn: false }))

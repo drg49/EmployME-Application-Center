@@ -1,13 +1,16 @@
 import React from 'react';
 import Login from './Login';
 import SignUp from './SignUp';
+import { GlobalCtx } from '../../App';
 
 import './index.scss';
 
 export default function UserAccount() {
   const [pageState, setPageState] = React.useState("default");
 
-  return (
+  const { globalState, setGlobalState } = React.useContext(GlobalCtx)
+
+  const loggedOutUI = () => (
     <>
       {pageState === "default" ? (
       <>
@@ -16,8 +19,22 @@ export default function UserAccount() {
         <button onClick={() => setPageState("signup")}id="sign-up-btn">Sign up</button>
       </>
       ) : null}
-      {pageState === "login" ? <Login setPageState={setPageState} /> : null}
+      {pageState === "login" ? <Login setPageState={setPageState} setGlobalState={setGlobalState} /> : null}
       {pageState === "signup" ? <SignUp setPageState={setPageState} /> : null}
+    </>
+  )
+  
+  const loggedInUI = () => (
+    <>
+      There is something here
+    </>
+  )
+
+  return (
+    <>
+      {globalState.isLoggedIn === null && <>Loading</>}
+      {globalState.isLoggedIn === false && loggedOutUI()}
+      {globalState.isLoggedIn && loggedInUI()}
     </>
   )
 }

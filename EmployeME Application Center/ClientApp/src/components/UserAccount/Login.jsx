@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 const spinner = <><FontAwesomeIcon icon={faSpinner} color="white" spin />{" "}</>
 
-export default function Login({ setPageState }) {
+export default function Login({ setPageState, setGlobalState }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const userRef = React.useRef();
   const passwordRef = React.useRef();
@@ -36,8 +36,9 @@ export default function Login({ setPageState }) {
     api.login(loginParams)
       .then(() => {
         api.validateUser()
-            .then(() => {
+            .then((data) => {
               setIsLoading(false);
+              setGlobalState({ userInfo: data, isLoggedIn: true})
               history.push("/")
             })
             .catch(() => {
