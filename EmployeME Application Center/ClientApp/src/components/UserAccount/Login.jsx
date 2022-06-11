@@ -2,13 +2,16 @@ import React from 'react';
 import * as api from '../../api/authentication'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import * as toastMethods from '../Toasts/toastMethods';
+import { useHistory } from "react-router-dom";
 
 const spinner = <><FontAwesomeIcon icon={faSpinner} color="white" spin />{" "}</>
 
-export default function Login({ setPageState}) {
+export default function Login({ setPageState }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const userRef = React.useRef();
   const passwordRef = React.useRef();
+  const history = useHistory();
 
   let loginParams = {};
   const loginUser = () => {
@@ -32,12 +35,19 @@ export default function Login({ setPageState}) {
     }
     api.login(loginParams)
       .then(() => {
-        console.log('User logged in successfully');
-        setIsLoading(false);
+        api.validateUser()
+            .then(() => {
+              setIsLoading(false);
+              history.push("/")
+            })
+            .catch(() => {
+              setIsLoading(false);
+              toastMethods.notifyError("Error during login process")
+            })
       })
       .catch(() => {
-        console.error('The user could not login')
         setIsLoading(false);
+        toastMethods.notifyError('Username or password is incorrect');
       })
   }
 

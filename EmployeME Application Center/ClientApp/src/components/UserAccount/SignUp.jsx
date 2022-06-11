@@ -1,9 +1,10 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import * as api from '../../api/authentication';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const moment = require('moment');
-const spinner = <><FontAwesomeIcon icon={faSpinner} color="white" spin />{" "}</>
+const spinner = <><FontAwesomeIcon icon={faSpinner} color="white" spin />{" "}</>;
 
 export default function SignUp({ setPageState }) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -17,8 +18,25 @@ export default function SignUp({ setPageState }) {
 
   const registerUser = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formattedBirthday = moment(birthdayRef.current.value).format("MMM Do YYYY");
-    console.log(formattedBirthday);
+    const userInfo = {
+      firstName: firstNameRef.current.value,
+      lastName: lastNameRef.current.value,
+      username: userRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      birthday: formattedBirthday
+    }
+    api.signUp(userInfo)
+      .then(() => {
+        setIsLoading(false);
+        console.log('User created successfully')
+      })
+      .catch((e) => {
+        setIsLoading(false);
+        console.log('ERROR', e);
+      })
   }
 
   return (

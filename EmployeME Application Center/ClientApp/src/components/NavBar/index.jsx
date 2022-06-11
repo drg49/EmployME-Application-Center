@@ -20,10 +20,10 @@ export default function NavBar() {
           <Link to="/search">Find Jobs {findJobsIcon}</Link>
         </li>
         <li>
-          <Link>Post Jobs {postJobsIcon}</Link>
+          <Link to="/post-jobs">Post Jobs {postJobsIcon}</Link>
         </li>
         <li>
-          <Link>Careers {careersIcon}</Link>
+          <Link to="/careers">Careers {careersIcon}</Link>
         </li>
         <li>
           <Link to="/my-profile">My Profile {userIcon}</Link>
