@@ -17,7 +17,6 @@ export default function SignUp({ setPageState, setGlobalState }) {
   const lastNameRef = React.useRef();
   const userRef = React.useRef();
   const emailRef = React.useRef();
-  const passwordRef = React.useRef();
   const birthdayRef = React.useRef();
 
   const registerUser = (e) => {
@@ -29,7 +28,7 @@ export default function SignUp({ setPageState, setGlobalState }) {
       lastName: lastNameRef.current.value.trim(),
       username: userRef.current.value.trim(),
       email: emailRef.current.value.trim(),
-      password: passwordRef.current.value,
+      password,
       birthday: formattedBirthday
     }
     api.signUp(userInfo)
@@ -38,7 +37,7 @@ export default function SignUp({ setPageState, setGlobalState }) {
           api.login({
             username: userRef.current.value,
             email: "",
-            password: passwordRef.current.value
+            password
           }).then(() => {
             api.validateUser()
               .then((data) => {
@@ -96,7 +95,6 @@ export default function SignUp({ setPageState, setGlobalState }) {
         <input
           type="password"
           maxLength={100}
-          ref={passwordRef}
           placeholder="Password"
           value={password}
           onChange={(e) => preventSpace(e.target.value.trim())}
