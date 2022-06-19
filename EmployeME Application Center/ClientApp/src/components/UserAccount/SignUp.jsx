@@ -1,13 +1,17 @@
 import React from 'react';
 import * as api from '../../api/authentication';
+import * as toastMethods from '../Toasts/toastMethods';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 const moment = require('moment');
 const spinner = <><FontAwesomeIcon icon={faSpinner} color="white" spin />{" "}</>;
 
-export default function SignUp({ setPageState }) {
+export default function SignUp({ setPageState, setGlobalState }) {
+  const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [password, preventSpace] = React.useState();
 
   const firstNameRef = React.useRef();
   const lastNameRef = React.useRef();
@@ -21,22 +25,40 @@ export default function SignUp({ setPageState }) {
     setIsLoading(true);
     const formattedBirthday = moment(birthdayRef.current.value).format("MMM Do YYYY");
     const userInfo = {
-      firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-      username: userRef.current.value,
-      email: emailRef.current.value,
+      firstName: firstNameRef.current.value.trim(),
+      lastName: lastNameRef.current.value.trim(),
+      username: userRef.current.value.trim(),
+      email: emailRef.current.value.trim(),
       password: passwordRef.current.value,
       birthday: formattedBirthday
     }
     api.signUp(userInfo)
-      .then(() => {
-        setIsLoading(false);
-        console.log('User created successfully')
-      })
-      .catch((e) => {
-        setIsLoading(false);
-        console.log('ERROR', e);
-      })
+      .then((response) => {
+        if (response.ok) {
+          api.login({
+            username: userRef.current.value,
+            email: "",
+            password: passwordRef.current.value
+          }).then(() => {
+            api.validateUser()
+              .then((data) => {
+                setIsLoading(false);
+                setGlobalState({ userInfo: data, isLoggedIn: true})
+                history.push("/")
+              })
+              .catch(() => {
+                setIsLoading(false);
+                toastMethods.notifyError("Error during login process")
+              })
+          })
+        }
+        else {
+          response.text().then((message) => {
+            message ? toastMethods.notifyError(message.replace(/['"]+/g, '')) : toastMethods.notifyError("There was an issue registering your accont")
+            setIsLoading(false);
+          })
+        }
+      });
   }
 
   return (
@@ -76,6 +98,8 @@ export default function SignUp({ setPageState }) {
           maxLength={100}
           ref={passwordRef}
           placeholder="Password"
+          value={password}
+          onChange={(e) => preventSpace(e.target.value.trim())}
           required
         />
         <label htmlFor="birthday">Date of Birth</label>

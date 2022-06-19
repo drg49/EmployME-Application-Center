@@ -58,7 +58,7 @@ namespace EmployeME_Application_Center.Controllers
                 _context.SaveChanges();
                 return Created("New user successfully added", _newUser);
             }
-            catch(Exception e)
+            catch
             {
                 return StatusCode(400, "An error occured processing your request");
             }

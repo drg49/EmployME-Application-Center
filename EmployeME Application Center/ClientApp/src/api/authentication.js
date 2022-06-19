@@ -17,7 +17,7 @@ export function signUp(signUpParams) {
           "Content-Type": "application/json"
       },
       body: JSON.stringify(signUpParams)
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  })
 }
 
 export function validateUser() {

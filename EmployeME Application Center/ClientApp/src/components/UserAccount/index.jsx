@@ -20,7 +20,7 @@ export default function UserAccount() {
       </>
       ) : null}
       {pageState === "login" ? <Login setPageState={setPageState} setGlobalState={setGlobalState} /> : null}
-      {pageState === "signup" ? <SignUp setPageState={setPageState} /> : null}
+      {pageState === "signup" ? <SignUp setPageState={setPageState} setGlobalState={setGlobalState} /> : null}
     </>
   )
   
