@@ -68,3 +68,25 @@ label {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
+
+#my-profile {
+  section {
+    display: flex;
+    width: 70%;
+    margin: auto;
+    justify-content: space-between;
+    align-items: end;
+    background-color: blanchedalmond;
+    padding: 9px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+
+  p {
+    margin: 5px 0px 0px 0px;
+  }
+}
+
+#profile-pic {
+  border-radius: 50%;
+  width: 90px;
+}

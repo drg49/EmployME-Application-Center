@@ -1,5 +1,5 @@
 #job-app-card {
-  border: 1px solid blue;
+  border: 1px solid green;
   border-radius: 4px;
   max-width: 400px;
   text-align: left;
@@ -8,13 +8,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
+  cursor: pointer;
 
     p {
       margin: 0px;
-    }
-
-    button {
-      padding: 5px 8px;
     }
 }
 

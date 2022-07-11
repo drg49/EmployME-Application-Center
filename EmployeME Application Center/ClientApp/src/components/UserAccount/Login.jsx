@@ -38,12 +38,16 @@ export default function Login({ setPageState, setGlobalState }) {
         api.validateUser()
             .then((data) => {
               setIsLoading(false);
-              setGlobalState({ userInfo: data, isLoggedIn: true})
-              history.push("/")
+              setGlobalState({ userInfo: data, isLoggedIn: true});
+              history.push("/");
+              const fn = data.firstName;
+              const greetings = [`Welcome back ${fn}!`,`Glad to see you ${fn} 😊`, `Hey there ${fn}!`];
+              const random = Math.floor(Math.random() * greetings.length);
+              toastMethods.notifySuccess(greetings[random]);
             })
             .catch(() => {
               setIsLoading(false);
-              toastMethods.notifyError("Error during login process")
+              toastMethods.notifyError('Error during login process');
             })
       })
       .catch(() => {

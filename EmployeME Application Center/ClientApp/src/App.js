@@ -20,11 +20,11 @@ export default function App() {
 
   React.useEffect(() => {
     api.validateUser()
-      .then(() => {
-        setGlobalState({ ...globalState, isLoggedIn: true })
+      .then((data) => {
+        setGlobalState({ userInfo: data, isLoggedIn: true })
       })
       .catch(() => setGlobalState({ ...globalState, isLoggedIn: false }))
-  },[]) 
+  }, []) 
 
   return (
     <GlobalCtx.Provider value = {{globalState, setGlobalState}}>

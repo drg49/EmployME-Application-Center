@@ -8,10 +8,14 @@ const pin = <FontAwesomeIcon icon={faMapMarker} color="gray" />
 export default function SearchResults({ results, isLoading }) {
   const [resultUI, setResultUI] = React.useState(<></>);
 
+  const openJobModal = () => {
+    console.log('open the details modal here')
+  }
+
   React.useEffect(() => {
     setResultUI(results?.map((item, index) => {
       return (
-        <div key={index} id="job-app-card">
+        <div key={index} id="job-app-card" className='card-one' onClick={openJobModal}>
           <section>
             <p>{item.jobTitle}</p>
             <p>{item.companyName}</p>
@@ -28,8 +32,7 @@ export default function SearchResults({ results, isLoading }) {
 
   return (
     <>
-      {isLoading && spinner}
-      {!isLoading ? resultUI : null}
+      {isLoading ? spinner : resultUI}
     </>
   )
 }

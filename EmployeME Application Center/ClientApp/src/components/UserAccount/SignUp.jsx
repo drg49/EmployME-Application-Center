@@ -53,7 +53,7 @@ export default function SignUp({ setPageState, setGlobalState }) {
         }
         else {
           response.text().then((message) => {
-            message ? toastMethods.notifyError(message.replace(/['"]+/g, '')) : toastMethods.notifyError("There was an issue registering your accont")
+            message ? toastMethods.notifyError(message.replace(/['"]+/g, '')) : toastMethods.notifyError("There was an issue registering your account")
             setIsLoading(false);
           })
         }

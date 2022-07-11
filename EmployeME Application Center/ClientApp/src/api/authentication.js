@@ -29,3 +29,13 @@ export function validateUser() {
     },
   }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
+
+export function logout() {
+  return fetch("app/users/logout", {
+    method: "POST",
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    }
+  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}
