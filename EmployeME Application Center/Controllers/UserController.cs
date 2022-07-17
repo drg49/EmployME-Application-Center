@@ -5,7 +5,7 @@ using EmployME_Application_Center.Models.Users;
 using EmployME_Application_Center.Security;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmployeME_Application_Center.Controllers
+namespace EmployME_Application_Center.Controllers
 {
     [ApiController]
     [Route("app/users")]

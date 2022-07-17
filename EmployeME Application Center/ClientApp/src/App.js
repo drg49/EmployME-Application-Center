@@ -6,6 +6,7 @@ import SearchPage from './components/SearchPage';
 import NotFound from './components/NotFound';
 import NavBar from './components/NavBar';
 import UserAccount from './components/UserAccount';
+import Apply from './components/Apply';
 import Toast from './components/Toasts';
 import * as api from './api/authentication';
 import './index.css'
@@ -39,6 +40,7 @@ export default function App() {
           />
           <Route path="/search/:jobTitle/:jobLocation" render={(rp) => <SearchPage {...rp} />} />
           <Route path="/search" render={(rp) => <SearchPage {...rp} />} />
+          <Route path="/apply" render={(rp) => <Apply {...rp} />} />
           <Route path="/my-profile" render={(rp) => <UserAccount {...rp}/>} />
           <Route path='*' render={(rp) =>  <NotFound {...rp}/>} />
         </Switch>

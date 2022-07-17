@@ -26,6 +26,10 @@ namespace EmployME_Application_Center.Data.EF
                     .HasColumnName("JobTitle")
                     .HasMaxLength(150);
 
+            this.Property(e => e.Description)
+                    .HasColumnName("Description")
+                    .HasMaxLength(1024);
+
             this.Property(e => e.UserId)
                     .HasColumnName("UserId");
 
