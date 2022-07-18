@@ -6,23 +6,55 @@ import SearchResults from './SearchResults';
 import './index.scss'
 
 export default function SearchPage(props) {
-  const [results, setResults] = React.useState(null);
+  const [results, setResults] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [page, setPage] = React.useState(1);
 
-  const jobTitle = props.match.params.jobTitle;
-  const jobLocation = props.match.params.jobLocation;
+  const pageSize = 10;
+  const jobTitleRef = React.useRef();
+  const jobLocRef = React.useRef();
 
-  React.useEffect(() => {
-    if (jobTitle && jobLocation) {
-    api.searchForJobApplications(jobTitle, jobLocation)
-      .then((data) => console.log(data))
-    }
-  }, [jobLocation, jobTitle]);
+  //const jobTitleParam = props.match.params.jobTitleParam || "anything";
+  //const jobLocParam = props.match.params.jobLocParam || "anywhere";
+
+  // React.useEffect(() => {
+  //   console.log(jobTitleParam, jobLocParam)
+  //   if (jobTitleParam && jobLocParam) {
+  //     api.searchForJobApplications(jobTitleParam, jobLocParam, pageSize, page)
+  //           .then((data) => console.log(data));
+  //   }
+  // }, [jobLocParam, jobTitleParam, page]);
+
+  const searchForJobApps = () => {
+    setIsLoading(true);
+    api.searchForJobApplications(jobTitleRef.current.value.trim(), jobLocRef.current.value.trim(), pageSize, page)
+      .then((data) => {
+        console.log(data)
+        if(data.length > 0) {
+          setResults(results.concat(data));
+        }
+        setIsLoading(false);
+      });
+  }
+  
+  React.useEffect(() => searchForJobApps(), [page]);
 
   return (
     <>
-      <SearchCriteria setResults={setResults} setIsLoading={setIsLoading} />
-      <SearchResults results={results} isLoading={isLoading} />
+      <SearchCriteria
+        searchForJobApps={searchForJobApps}
+        jobTitleRef={jobTitleRef}
+        jobLocRef={jobLocRef}
+        setResults={setResults}
+        page={page}
+        setPage={setPage}
+      />
+      <SearchResults
+        results={results}
+        isLoading={isLoading}
+        page={page}
+        setPage={setPage}
+      />
     </>
   );
 }

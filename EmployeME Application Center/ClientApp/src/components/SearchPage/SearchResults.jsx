@@ -7,17 +7,18 @@ import ModalActionHeader from '../ModalActionHeader';
 
 const moment = require('moment');
 
-const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="8x" style={{ 'marginTop': '20px' }} />
+const spinner = (size, style) => <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size={size} style={style} />
 const pin = <FontAwesomeIcon icon={faMapMarker} color="gray" />
 
 Modal.setAppElement('#root');
 
-export default function SearchResults({ results, isLoading }) {
+export default function SearchResults({ results, isLoading, page, setPage }) {
   const [resultUI, setResultUI] = React.useState(<></>);
   const [modalState, setModalState] = React.useState({
     isOpen: false,
     jobAppData: {}
   });
+  const [paginateActive, setPaginateActive] = React.useState(false);
 
   const history = useHistory();
 
@@ -51,23 +52,37 @@ export default function SearchResults({ results, isLoading }) {
     }));
   }, [results]);
 
+  const paginate = (e) => {
+    setPaginateActive(true);
+    const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight;
+    if (bottom && !isLoading) {
+      setPage(page + 1);
+    }
+  }
+
   return (
     <>
-      {isLoading ? spinner : resultUI}
-      <Modal
-        isOpen={modalState.isOpen}
-        className="modal mediumModal"
-        overlayClassName="myoverlay"
+      <div
+        id="search-results"
+        onScroll={paginate}
       >
-        <ModalActionHeader
-          title={modalState.jobAppData.jobTitle}
-          onClose={() => setModalState({ ...modalState, isOpen: false })}
-        />
-        <strong>{modalState.jobAppData.companyName} | {modalState.jobAppData.jobLocation}</strong>
-        <p>Posted on {moment(modalState.jobAppData.uploadDate).format('LL')}</p>
-        <p>{modalState.jobAppData.description}</p>
-        {applyBtn(modalState.jobAppData.appId)}
-      </Modal>
+        {isLoading && page === 1 ? spinner("8x", { 'marginTop': '20px' }) : resultUI}
+        <Modal
+          isOpen={modalState.isOpen}
+          className="modal mediumModal"
+          overlayClassName="myoverlay"
+        >
+          <ModalActionHeader
+            title={modalState.jobAppData.jobTitle}
+            onClose={() => setModalState({ ...modalState, isOpen: false })}
+          />
+          <strong>{modalState.jobAppData.companyName} | {modalState.jobAppData.jobLocation}</strong>
+          <p>Posted on {moment(modalState.jobAppData.uploadDate).format('LL')}</p>
+          <p>{modalState.jobAppData.description}</p>
+          {applyBtn(modalState.jobAppData.appId)}
+        </Modal>
+      </div>
+      {isLoading && paginateActive && spinner("1x", {})}
     </>
   )
 }

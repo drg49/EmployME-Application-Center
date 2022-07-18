@@ -1,21 +1,16 @@
 import React from 'react';
-import * as api from '../../api/jobApplications';
 import debounce from 'lodash.debounce';
 
-export default function SearchCriteria({ setResults, setIsLoading }) {
-  const jobTitleRef = React.useRef();
-  const jobLocRef = React.useRef();
-
+export default function SearchCriteria({ 
+  searchForJobApps, jobTitleRef, jobLocRef, setResults, page, setPage 
+}) {
   const handleChange = () => {
-    if (jobTitleRef.current.value === '' && jobLocRef.current.value === '') return;
-
-    setIsLoading(true);
-
-    api.searchForJobApplications(jobTitleRef.current.value, jobLocRef.current.value)
-      .then((data) => {
-        setResults(data);
-        setIsLoading(false);
-      });
+    if (jobTitleRef.current.value.trim() === '' && jobLocRef.current.value.trim() === '') return;
+    setResults([]);
+    if (page !== 1) {
+      return setPage(1);
+    }
+    return searchForJobApps();
   }
 
   const debouncedChangeHandler = React.useMemo(() => debounce(handleChange, 300), []);

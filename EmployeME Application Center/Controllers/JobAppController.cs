@@ -33,11 +33,7 @@ namespace EmployME_Application_Center.Controllers
                 query = query.Where((job) => job.JobLocation.Contains(request.JobLocation));
             }
 
-            //int pageSize = 10;
-            //int page = 1;
-            //int skip
-
-            return query.Select(job => new JobAppSearchResponse
+            var result = query.Select(job => new JobAppSearchResponse
             {
                 AppId = job.AppId,
                 CompanyName = job.CompanyName,
@@ -45,7 +41,19 @@ namespace EmployME_Application_Center.Controllers
                 JobLocation = job.JobLocation,
                 JobTitle = job.JobTitle,
                 UploadDate = job.UploadDate
-            }).ToList();
+            });
+
+            int total = result.Count();
+            
+            var skip = request.PageSize * (request.Page - 1);
+
+            var canPage = skip < total;
+
+            if (!canPage) {
+                return new List<JobAppSearchResponse>();
+            }
+
+            return result.Skip(skip).Take(request.PageSize).ToList();
         }
     }
 }
