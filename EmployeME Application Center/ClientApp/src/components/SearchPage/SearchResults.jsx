@@ -12,13 +12,12 @@ const pin = <FontAwesomeIcon icon={faMapMarker} color="gray" />
 
 Modal.setAppElement('#root');
 
-export default function SearchResults({ results, isLoading, page, setPage }) {
+export default function SearchResults({ results, isLoading, page, setPage, paginateActive, setPaginateActive }) {
   const [resultUI, setResultUI] = React.useState(<></>);
   const [modalState, setModalState] = React.useState({
     isOpen: false,
     jobAppData: {}
   });
-  const [paginateActive, setPaginateActive] = React.useState(false);
 
   const history = useHistory();
 
@@ -53,9 +52,9 @@ export default function SearchResults({ results, isLoading, page, setPage }) {
   }, [results]);
 
   const paginate = (e) => {
-    setPaginateActive(true);
     const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight;
     if (bottom && !isLoading) {
+      setPaginateActive(true);
       setPage(page + 1);
     }
   }
@@ -66,7 +65,7 @@ export default function SearchResults({ results, isLoading, page, setPage }) {
         id="search-results"
         onScroll={paginate}
       >
-        {isLoading && page === 1 ? spinner("8x", { 'marginTop': '20px' }) : resultUI}
+        {isLoading ? spinner("8x", { 'marginTop': '20px' }) : resultUI}
         <Modal
           isOpen={modalState.isOpen}
           className="modal mediumModal"
@@ -82,7 +81,7 @@ export default function SearchResults({ results, isLoading, page, setPage }) {
           {applyBtn(modalState.jobAppData.appId)}
         </Modal>
       </div>
-      {isLoading && paginateActive && spinner("1x", {})}
+      {paginateActive && spinner("1x", {})}
     </>
   )
 }

@@ -8,3 +8,12 @@ export function searchForJobApplications(jobTitle, jobLocation, pageSize, page) 
       body: JSON.stringify({ jobTitle, jobLocation, pageSize, page })
   }).then((response) => response.ok ? response.json() : Promise.reject(response))
 }
+
+export function getjobApplication(appId) {
+  return fetch(`app/job-applications/get-job-app/${appId}`, {
+      method: "GET",
+      headers: {
+          Accept: "application/json",
+      },
+  })
+}

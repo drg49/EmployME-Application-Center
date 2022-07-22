@@ -16,6 +16,9 @@ export const notifySuccess = (message) => {
 }
 
 export const notifyError = (message) => {
+    if (/['||"]/.test(message)) {
+      message = message.replace(/['"]+/g, '');
+    }
     toast.error(message, {
       position: "top-right",
       autoClose: 5000,

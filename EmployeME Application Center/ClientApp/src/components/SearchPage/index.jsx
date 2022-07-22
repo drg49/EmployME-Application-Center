@@ -9,6 +9,7 @@ export default function SearchPage(props) {
   const [results, setResults] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [page, setPage] = React.useState(1);
+  const [paginateActive, setPaginateActive] = React.useState(false);
 
   const pageSize = 10;
   const jobTitleRef = React.useRef();
@@ -26,13 +27,12 @@ export default function SearchPage(props) {
   // }, [jobLocParam, jobTitleParam, page]);
 
   const searchForJobApps = () => {
-    setIsLoading(true);
     api.searchForJobApplications(jobTitleRef.current.value.trim(), jobLocRef.current.value.trim(), pageSize, page)
       .then((data) => {
-        console.log(data)
         if(data.length > 0) {
           setResults(results.concat(data));
         }
+        setPaginateActive(false);
         setIsLoading(false);
       });
   }
@@ -48,12 +48,15 @@ export default function SearchPage(props) {
         setResults={setResults}
         page={page}
         setPage={setPage}
+        setIsLoading={setIsLoading}
       />
       <SearchResults
         results={results}
         isLoading={isLoading}
         page={page}
         setPage={setPage}
+        paginateActive={paginateActive}
+        setPaginateActive={setPaginateActive}
       />
     </>
   );

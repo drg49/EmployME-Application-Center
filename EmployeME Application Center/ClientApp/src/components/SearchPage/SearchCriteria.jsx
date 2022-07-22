@@ -2,10 +2,11 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 
 export default function SearchCriteria({ 
-  searchForJobApps, jobTitleRef, jobLocRef, setResults, page, setPage 
+  searchForJobApps, jobTitleRef, jobLocRef, setResults, page, setPage, setIsLoading
 }) {
   const handleChange = () => {
     if (jobTitleRef.current.value.trim() === '' && jobLocRef.current.value.trim() === '') return;
+    setIsLoading(true);
     setResults([]);
     if (page !== 1) {
       return setPage(1);

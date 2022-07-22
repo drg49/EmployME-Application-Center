@@ -40,7 +40,7 @@ export default function App() {
           />
           <Route path="/search/:jobTitle/:jobLocation" render={(rp) => <SearchPage {...rp} />} />
           <Route path="/search" render={(rp) => <SearchPage {...rp} />} />
-          <Route path="/apply" render={(rp) => <Apply {...rp} />} />
+          <Route path="/apply/:appId" render={(rp) => <Apply {...rp} />} />
           <Route path="/my-profile" render={(rp) => <UserAccount {...rp}/>} />
           <Route path='*' render={(rp) =>  <NotFound {...rp}/>} />
         </Switch>
