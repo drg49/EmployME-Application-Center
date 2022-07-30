@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import * as toastMethods from '../Toasts/toastMethods';
 import * as api from '../../api/jobApplications';
+import * as parser from './defaultQuestionParser';
 
 const moment = require('moment');
 
@@ -24,11 +25,23 @@ export default function Apply(props) {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+        result.defaultQuestions = JSON.parse(result.defaultQuestions)
+        console.log(result);       
         setData(result);
         setIsLoading(false);
       })
   }, []);
+
+  const mapper = () => (
+    data.defaultQuestions.map((item, index) => {
+      return (
+        <div key={index} className="job-app-question">
+          <strong>{parser.parseQuestionText(item.name)}</strong>
+          {parser.parseInputField(item.name, item.checked)}
+        </div>
+      )
+    })
+  );
 
   return (
     <>
@@ -37,6 +50,7 @@ export default function Apply(props) {
         <h2>{data.jobTitle} - {data.companyName}</h2>
         <span>{data.jobLocation}</span>
         <p>Posted on {moment(data.uploadDate).format('LL')}</p>
+        {data.defaultQuestions && mapper()}
       </>
       }
     </>

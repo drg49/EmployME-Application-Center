@@ -40,7 +40,7 @@ export default function SearchPage(props) {
   React.useEffect(() => searchForJobApps(), [page]);
 
   return (
-    <>
+    <div id="search-page">
       <SearchCriteria
         searchForJobApps={searchForJobApps}
         jobTitleRef={jobTitleRef}
@@ -58,6 +58,6 @@ export default function SearchPage(props) {
         paginateActive={paginateActive}
         setPaginateActive={setPaginateActive}
       />
-    </>
+    </div>
   );
 }
