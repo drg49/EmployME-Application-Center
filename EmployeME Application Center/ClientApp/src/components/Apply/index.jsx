@@ -25,10 +25,15 @@ export default function Apply(props) {
         return response.json();
       })
       .then((result) => {
-        result.defaultQuestions = JSON.parse(result.defaultQuestions)
-        console.log(result);       
-        setData(result);
-        setIsLoading(false);
+        result.defaultQuestions = JSON.parse(result.defaultQuestions);   
+          api.getCustomJobAppQuestions(result.appId)
+            .then((customQuestions) => {
+              result.customQuestions = customQuestions;
+              console.log(result); //
+              setData(result);
+              setIsLoading(false);
+            })
+            .catch(() => toastMethods.notifyError("There was an error, please try again later"))
       })
   }, []);
 

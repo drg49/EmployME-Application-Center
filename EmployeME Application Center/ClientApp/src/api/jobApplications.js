@@ -17,3 +17,12 @@ export function getjobApplication(appId) {
       },
   })
 }
+
+export function getCustomJobAppQuestions(appId) {
+  return fetch(`app/job-applications/get-custom-questions/${appId}`, {
+    method: "GET",
+    headers: {
+        Accept: "application/json",
+    },
+  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+}

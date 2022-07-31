@@ -15,11 +15,13 @@ namespace EmployME_Application_Center.Data
 
         public virtual DbSet<JobApplication> JobApplications { get; set; }
         public virtual DbSet<User> AppCenterUsers { get; set; }
+        public virtual DbSet<CustomJobAppQuestion> CustomJobAppQuestions { get; set; }
 
         protected void OnModelCreating(EF6.DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new JobApplicationConfig());
             modelBuilder.Configurations.Add(new UserConfig());
+            modelBuilder.Configurations.Add(new CustomJobAppQuestionsConfig());
         }
     }
 }

@@ -87,5 +87,29 @@ namespace EmployME_Application_Center.Controllers
                 return BadRequest("The request has failed.");
             }
         }
+
+        /// <summary>
+        /// Get the custom questions of a job application
+        /// </summary>
+        /// <returns>A job application</returns>
+        [HttpGet("get-custom-questions/{appId}")]
+        public IActionResult GetCustomQuestions([FromRoute] string appId)
+        {
+            List<CustomJobAppQuestion> results = new List<CustomJobAppQuestion>();
+            try
+            {
+                var query = from cjaq in _context.CustomJobAppQuestions
+                            where cjaq.AppId == appId
+                            select cjaq;
+
+                results.AddRange(query);
+
+                return Ok(results);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("The request has failed.");
+            }
+        }
     }
 }
