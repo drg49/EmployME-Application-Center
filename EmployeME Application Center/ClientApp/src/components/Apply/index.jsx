@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import * as toastMethods from '../Toasts/toastMethods';
 import * as api from '../../api/jobApplications';
-import * as parser from './defaultQuestionParser';
+import * as parser from './questionParser';
+import './index.scss';
 
 const moment = require('moment');
 
@@ -37,7 +38,7 @@ export default function Apply(props) {
       })
   }, []);
 
-  const mapper = () => (
+  const defaultMapper = () => (
     data.defaultQuestions.map((item, index) => {
       return (
         <div key={index} className="job-app-question">
@@ -48,6 +49,17 @@ export default function Apply(props) {
     })
   );
 
+  const customMapper = () => (
+    data.customQuestions.map((item, index) => {
+      return (
+        <div key={index} className="job-app-question">
+          <strong>{item.question}</strong>
+          {parser.parseCustomQuestion(item.inputFieldType, item.required, index)}
+        </div>
+      )
+    })
+  )
+
   return (
     <>
       {isLoading ? spinner : 
@@ -55,7 +67,10 @@ export default function Apply(props) {
         <h2>{data.jobTitle} - {data.companyName}</h2>
         <span>{data.jobLocation}</span>
         <p>Posted on {moment(data.uploadDate).format('LL')}</p>
-        {data.defaultQuestions && mapper()}
+        <section id="job-app-question-wrapper">
+          {data.defaultQuestions?.length > 0 && defaultMapper()}
+          {data.customQuestions?.length > 0 && customMapper()}
+        </section>
       </>
       }
     </>

@@ -6,7 +6,7 @@ export const parseQuestionText = (name) => {
     case 'middleName': return 'Middle Name';
     case 'lastName': return 'Last Name';
     case 'emailAddress': return 'Email Address';
-    case 'telephoneNumber': return 'Telephone Name';
+    case 'telephoneNumber': return 'Telephone Number';
     case 'addressOne': return 'Address';
     case 'addressTwo': return 'Second Address';
     case 'age': return 'Age';
@@ -64,27 +64,48 @@ export const yesNoField = (index) => (
   </div>
 );
 
+export const parseCustomQuestion = (inputType, isRequired, index) => {
+  switch (inputType) {
+    case 'shortText': return <input type="text" required={isRequired} />;
+    case 'longText': return <textarea required={isRequired} />;
+    case 'yesNo': return yesNoField(index);
+    case 'number': return <input type="number" required={isRequired} />;
+    case 'date': return <input type="date" required={isRequired} />;
+    default: return <input type="text" />;
+  }
+};
+
 const addressFields = (isRequired) => (
-  <div>
-    <label htmlFor="main-address">Street</label>
-    <input type="text" id="main-address" required={isRequired} maxLength={100} />
-    <br />
-    <label htmlFor="city">City</label>
-    <input type="text" id="city" required={isRequired} maxLength={50}/>
+  <section id="address-fields">
+    <div className='flex'>
+      <div>
+        <strong htmlFor="main-address">Street</strong>
+        <input type="text" id="main-address" required={isRequired} maxLength={100} />
+      </div>
+      <div>
+        <strong htmlFor="city">City</strong>
+        <input type="text" id="city" required={isRequired} maxLength={50}/>
+      </div>
+    </div>
     <br />
     <label htmlFor="states">State/Territory</label><br />
     {statesDropdown}
     <br /> <br />
-    <label htmlFor="country">Country</label><br />
-    {countryDropDown}
-    <br /> <br />
-    <label htmlFor="zip-code">Zip Code</label>
-    <input type="text" required={isRequired} maxLength={10} />
-  </div>
+    <div className='flex'>
+      <div>
+        <label htmlFor="country">Country</label><br />
+        {countryDropDown}
+      </div>
+      <div>
+        <strong htmlFor="zip-code">Zip Code</strong>
+        <input type="text" required={isRequired} maxLength={10} />
+      </div>
+    </div>
+  </section>
 )
 
 const references = (
-  <div>
+  <section>
     <label htmlFor="refName">Name</label>
     <input type="text" id="refName" maxLength={40} />
 
@@ -99,7 +120,7 @@ const references = (
 
     <label htmlFor="refTelNumber">Phone Number</label>
     <input type="tel" id="refTelNumber" placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
-  </div>
+  </section>
 )
 
 const statesDropdown = (
