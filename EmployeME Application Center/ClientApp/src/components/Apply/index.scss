@@ -17,13 +17,13 @@
     justify-content: space-between;
   }
 
-  #address-fields {
+  #address-fields, #references {
     border: 1px solid gray;
     border-radius: 4px;
     padding: 5px;
   }
 
-  textarea, input {
+  textarea, input, select {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
@@ -34,9 +34,7 @@
     border-style: none solid solid none;
     border-width: medium 1px 1px medium;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
-    color: #555555;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 1em;
     transition: background-color 0.2s ease 0s;
   }
 
@@ -49,18 +47,43 @@
     resize: none;
   }
 
-  input {
+  textarea, input {
+    font-size: 1em;
+    color: #555555;
+  }
+
+  input, select {
     border-radius: 3px;
     padding: 3px;
+  }
+
+  select {
+    height: 25px;
+    margin-top: 3px;
   }
 
   input[type=radio] {
     box-shadow: none;
   }
 
-  textarea:focus, input:focus {
+  textarea:focus, input:focus, select:focus {
       background: none repeat scroll 0 0 #FFFFFF;
       outline-width: 0;
   }
 
+}
+
+#references {
+  button {
+
+  }
+
+  strong {
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
+}
+
+#second-address {
+  margin-bottom: 5px;
 }

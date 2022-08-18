@@ -14,6 +14,15 @@ export default function Apply(props) {
   const appId = props.match.params.appId;
   const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = React.useState({});
+  // Job app fields filled out by the applicant
+  const [jobAppData, setJobAppData] = React.useState({});
+  const [addressTwoField, setAddressTwoField] = React.useState(null);
+
+  const addSecondAddress = (isRequired) => setAddressTwoField(
+      <div id="second-address">
+        {parser.addressFields(isRequired)}
+      </div>
+    )
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -38,12 +47,25 @@ export default function Apply(props) {
       })
   }, []);
 
+  const addressTwo = (isRequired) => (
+    <>
+      {addressTwoField}
+      <button 
+        onClick={() => addSecondAddress(isRequired)}
+        disabled={addressTwoField !== null}
+      >
+        Add Another Address
+      </button>
+    </>
+  )
+
   const defaultMapper = () => (
     data.defaultQuestions.map((item, index) => {
       return (
         <div key={index} className="job-app-question">
           <strong>{parser.parseQuestionText(item.name)}</strong>
-          {parser.parseInputField(item.name, item.checked)}
+          {parser.parseInputField(item.name, item.checked, jobAppData, setJobAppData)}
+          {item.name === 'addressTwo' && addressTwo(item.checked)}
         </div>
       )
     })
@@ -58,7 +80,9 @@ export default function Apply(props) {
         </div>
       )
     })
-  )
+  );
+
+  React.useEffect(() => console.log(jobAppData), [jobAppData]); //
 
   return (
     <>

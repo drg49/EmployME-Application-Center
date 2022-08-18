@@ -140,3 +140,8 @@ button:hover {
 .ReactModal__Overlay--before-close {
     opacity: 0;
 }
+
+.close-btn {
+    background: none;
+    border: none;
+}

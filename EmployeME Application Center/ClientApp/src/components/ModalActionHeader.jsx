@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
-const closeIcon = (size) => <FontAwesomeIcon icon ={faWindowClose} size={size} />
+const closeIcon = (size) => <FontAwesomeIcon icon ={faClose} size={size} />
 
 export default function ModalActionHeader({ title, onClose, headerStyling, titleStyling, closeBtnSize }){
 
@@ -13,7 +13,7 @@ export default function ModalActionHeader({ title, onClose, headerStyling, title
       </h2>
       <button
         onClick={onClose}
-        className="strip-btn close-btn"
+        className="close-btn"
       >
         {closeIcon(closeBtnSize)}
       </button>

@@ -8,7 +8,6 @@ export const parseQuestionText = (name) => {
     case 'emailAddress': return 'Email Address';
     case 'telephoneNumber': return 'Telephone Number';
     case 'addressOne': return 'Address';
-    case 'addressTwo': return 'Second Address';
     case 'age': return 'Age';
     case 'ssn': return 'Social Security Number';
     case 'usCitizenship': return 'Are you a US citizen?';
@@ -27,17 +26,16 @@ export const parseQuestionText = (name) => {
   }
 }
 
-export const parseInputField = (name, isRequired) => {
+export const parseInputField = (name, isRequired, jobAppData, setJobAppData) => {
   switch (name) {
-    case 'firstName': return <input type="text" required={isRequired} maxLength={40} />;
-    case 'middleName': return <input type="text" required={isRequired} maxLength={40} />;
-    case 'lastName': return <input type="text" required={isRequired} maxLength={40} />;
-    case 'emailAddress': return <input type="email" required={isRequired} maxLength={320}/>;
-    case 'telephoneNumber': return <input type="tel" required={isRequired} placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>;
+    case 'firstName': return <input type="text" required={isRequired} maxLength={40} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'middleName': return <input type="text" required={isRequired} maxLength={40} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'lastName': return <input type="text" required={isRequired} maxLength={40} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'emailAddress': return <input type="email" required={isRequired} maxLength={320} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'telephoneNumber': return <input type="tel" required={isRequired} placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'addressOne': return addressFields(isRequired);
-    case 'addressTwo': return <input type="text" required={isRequired} />;
-    case 'age': return <input type="number" min={0} max="150" required={isRequired} />;
-    case 'ssn': return <input type="text" maxLength={9} required={isRequired} />;
+    case 'age': return <input type="number" min={0} max="150" required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'ssn': return <input type="text" maxLength={9} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'usCitizenship': return yesNoField('usCitizenship');
     case 'driversLicense': return yesNoField('driversLicense');
     case 'resume': return <input type="file" readOnly/>;
@@ -50,7 +48,7 @@ export const parseInputField = (name, isRequired) => {
     case 'references': return references;
     case 'hearAboutPosition': return <input type="text" required={isRequired} maxLength={50} />;
     case 'availableStartDate': return <input type="date" readOnly/>;
-    default: return <input type="text" />;
+    default: return null;
   }
 };
 
@@ -75,7 +73,7 @@ export const parseCustomQuestion = (inputType, isRequired, index) => {
   }
 };
 
-const addressFields = (isRequired) => (
+export const addressFields = (isRequired) => (
   <section id="address-fields">
     <div className='flex'>
       <div>
@@ -88,8 +86,21 @@ const addressFields = (isRequired) => (
       </div>
     </div>
     <br />
-    <label htmlFor="states">State/Territory</label><br />
-    {statesDropdown}
+    <div className='flex'>
+      <div>
+        <label htmlFor="states">State/Territory</label><br />
+        {statesDropdown}
+      </div>
+      <div>
+        <label htmlFor="address-type">Type</label><br />
+        <select name="address-type" id="address-type">
+          <option value="HM">Home</option>
+          <option value="WK">Work</option>
+          <option value="PB">P.O. Box</option>
+          <option value="OT">Other</option>
+        </select>
+      </div>
+    </div>
     <br /> <br />
     <div className='flex'>
       <div>
@@ -105,21 +116,24 @@ const addressFields = (isRequired) => (
 )
 
 const references = (
-  <section>
-    <label htmlFor="refName">Name</label>
+  <section id="references">
+    <strong htmlFor="refName">Name</strong>
     <input type="text" id="refName" maxLength={40} />
 
-    <label htmlFor="refPos">Position</label>
+    <strong htmlFor="refPos">Position</strong>
     <input type="text" id="refPos" maxLength={40} />
 
-    <label htmlFor="refComp">Company</label>
+    <strong htmlFor="refComp">Company</strong>
     <input type="text" id="refComp" maxLength={50} />
 
-    <label htmlFor="refEmail">Email Address</label>
+    <strong htmlFor="refEmail">Email Address</strong>
     <input type="email" id="refEmail" maxLength={320}/>
 
-    <label htmlFor="refTelNumber">Phone Number</label>
+    <strong htmlFor="refTelNumber">Phone Number</strong>
     <input type="tel" id="refTelNumber" placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+    
+    <br />
+    <button>Add</button>
   </section>
 )
 
