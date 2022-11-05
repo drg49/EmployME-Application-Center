@@ -1,3 +1,5 @@
+const handleResponse = response => response.ok ? response.json() : Promise.reject(response);
+
 export function login(loginParams) {
   return fetch("app/users/login", {
       method: "POST",
@@ -6,7 +8,7 @@ export function login(loginParams) {
           "Content-Type": "application/json"
       },
       body: JSON.stringify(loginParams)
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  }).then(handleResponse)
 }
 
 export function signUp(signUpParams) {
@@ -27,7 +29,7 @@ export function validateUser() {
         Accept: "application/json",
         "Content-Type": "application/json"
     },
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  }).then(handleResponse)
 }
 
 export function logout() {
@@ -37,5 +39,16 @@ export function logout() {
         Accept: "application/json",
         "Content-Type": "application/json"
     }
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  }).then(handleResponse)
+}
+
+export function updateUser(editData) {
+  return fetch("app/users/update-user", {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(editData)
+  }).then(handleResponse)
 }

@@ -1,3 +1,5 @@
+const handleResponse = response => response.ok ? response.json() : Promise.reject(response);
+
 export function searchForJobApplications(jobTitle, jobLocation, pageSize, page) {
   return fetch("app/job-applications/search", {
       method: "POST",
@@ -6,7 +8,7 @@ export function searchForJobApplications(jobTitle, jobLocation, pageSize, page) 
           "Content-Type": "application/json"
       },
       body: JSON.stringify({ jobTitle, jobLocation, pageSize, page })
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  }).then(handleResponse)
 }
 
 export function getjobApplication(appId) {
@@ -24,5 +26,5 @@ export function getCustomJobAppQuestions(appId) {
     headers: {
         Accept: "application/json",
     },
-  }).then((response) => response.ok ? response.json() : Promise.reject(response))
+  }).then(handleResponse)
 }

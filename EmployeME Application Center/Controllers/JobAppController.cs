@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using EmployME_Application_Center.Data;
@@ -82,7 +81,7 @@ namespace EmployME_Application_Center.Controllers
                     return BadRequest("This job application does not exist");
                 }
             }
-            catch (Exception e)
+            catch
             {
                 return BadRequest("The request has failed.");
             }
@@ -91,7 +90,7 @@ namespace EmployME_Application_Center.Controllers
         /// <summary>
         /// Get the custom questions of a job application
         /// </summary>
-        /// <returns>A job application</returns>
+        /// <returns>A list of custom job app questions</returns>
         [HttpGet("get-custom-questions/{appId}")]
         public IActionResult GetCustomQuestions([FromRoute] string appId)
         {
@@ -106,7 +105,27 @@ namespace EmployME_Application_Center.Controllers
 
                 return Ok(results);
             }
-            catch (Exception e)
+            catch
+            {
+                return BadRequest("The request has failed.");
+            }
+        }
+
+        /// <summary>
+        /// User (job applicant) has filled out all fields and is submitting the job application
+        /// </summary>
+        /// <param name="jobAppForm">The filled out job application to be submitted</param>
+        /// <returns>A status code of 200 if the request succeeded, or 400 if it failed</returns>
+        [HttpPost("complete-job-app")]
+        public IActionResult CompleteJobApplication([FromBody] JobApplicationForm jobAppForm)
+        {
+            
+            try
+            {
+
+                return Ok();
+            }
+            catch
             {
                 return BadRequest("The request has failed.");
             }

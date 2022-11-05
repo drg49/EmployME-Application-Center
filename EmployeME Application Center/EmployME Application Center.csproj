@@ -7,7 +7,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <RootNamespace>EmployeME_Application_Center</RootNamespace>
+    <RootNamespace>EmployME_Application_Center</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

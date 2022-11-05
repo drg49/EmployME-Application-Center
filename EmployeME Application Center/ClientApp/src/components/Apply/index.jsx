@@ -13,9 +13,8 @@ const spinner = <FontAwesomeIcon icon={faSpinner} spin color="#2b2d2f" size="8x"
 export default function Apply(props) {
   const appId = props.match.params.appId;
   const [isLoading, setIsLoading] = React.useState(false);
-  const [data, setData] = React.useState({});
-  // Job app fields filled out by the applicant
-  const [jobAppData, setJobAppData] = React.useState({});
+  const [data, setData] = React.useState({}); // Data to build the job application
+  const [jobAppData, setJobAppData] = React.useState({}); // Job app fields filled out by the applicant
   const [addressTwoField, setAddressTwoField] = React.useState(null);
 
   const addSecondAddress = (isRequired) => setAddressTwoField(
@@ -39,7 +38,6 @@ export default function Apply(props) {
           api.getCustomJobAppQuestions(result.appId)
             .then((customQuestions) => {
               result.customQuestions = customQuestions;
-              console.log(result); //
               setData(result);
               setIsLoading(false);
             })
@@ -50,13 +48,24 @@ export default function Apply(props) {
   const addressTwo = (isRequired) => (
     <>
       {addressTwoField}
-      <button 
+      {!addressTwoField &&
+      <button
         onClick={() => addSecondAddress(isRequired)}
-        disabled={addressTwoField !== null}
+        className='em-global-add-btn'
       >
         Add Another Address
-      </button>
+      </button>}
+      {addressTwoField && removeSecondAddress()}
     </>
+  );
+
+  const removeSecondAddress = () => (
+    <button
+      onClick={() => setAddressTwoField(null)}
+      className='em-global-danger-btn'
+    >
+      Remove Second Address
+    </button>
   )
 
   const defaultMapper = () => (
@@ -82,7 +91,7 @@ export default function Apply(props) {
     })
   );
 
-  React.useEffect(() => console.log(jobAppData), [jobAppData]); //
+  React.useEffect(() => console.log(jobAppData), [jobAppData]);
 
   return (
     <>
@@ -95,6 +104,7 @@ export default function Apply(props) {
           {data.defaultQuestions?.length > 0 && defaultMapper()}
           {data.customQuestions?.length > 0 && customMapper()}
         </section>
+        <button id="complete-job-app">Complete</button>
       </>
       }
     </>

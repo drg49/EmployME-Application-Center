@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using EmployME_Application_Center.Data;
 using EmployME_Application_Center.Models.Users;
 using EmployME_Application_Center.Security;
@@ -165,11 +167,17 @@ namespace EmployME_Application_Center.Controllers
                     return NotFound();
                 }
 
-                userToUpdate.UserId = updatedUser.UserId;
-                userToUpdate.Username = updatedUser.Username;
-                userToUpdate.FirstName = updatedUser.FirstName;
-                userToUpdate.LastName = updatedUser.LastName;
-                userToUpdate.Email = updatedUser.Email;
+                foreach (PropertyInfo pi in updatedUser.GetType().GetProperties())
+                {
+                    object value = pi.GetValue(updatedUser, null);
+
+                    if (value != null)
+                    {
+                        PropertyInfo prop = typeof(User).GetProperty(pi.Name);
+                        prop.SetValue(userToUpdate, value);
+                    }
+                }
+
                 _context.SaveChanges();
                 return Ok(userToUpdate);
             }

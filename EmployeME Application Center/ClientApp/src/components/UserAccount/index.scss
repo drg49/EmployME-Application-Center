@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+@mixin disable-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #auth-box {
   border: 1px solid gray;
   max-width: 330px;
@@ -69,13 +75,10 @@ label {
   font-weight: bold;
 }
 
-#my-profile {
+#profile-page {
   section {
-    display: flex;
     width: 70%;
     margin: auto;
-    justify-content: space-between;
-    align-items: end;
     background-color: blanchedalmond;
     padding: 9px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -86,7 +89,43 @@ label {
   }
 }
 
+#first-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  position: relative;
+
+  input {
+    width: 40%;
+    display: inline;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+#edit-btn {
+  background: none;
+  border: none;
+  position: absolute; 
+  top: 10px; 
+  right: 10px; 
+}
+
 #profile-pic {
-  border-radius: 50%;
-  width: 90px;
+  width: min-content;
+
+  span {
+    @include disable-select();
+  }
+
+  img {
+    border-radius: 50%;
+    width: 90px;
+    padding: 0px 20px;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
 }

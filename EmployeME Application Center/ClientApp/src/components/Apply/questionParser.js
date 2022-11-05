@@ -26,6 +26,7 @@ export const parseQuestionText = (name) => {
   }
 }
 
+
 export const parseInputField = (name, isRequired, jobAppData, setJobAppData) => {
   switch (name) {
     case 'firstName': return <input type="text" required={isRequired} maxLength={40} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
@@ -35,29 +36,29 @@ export const parseInputField = (name, isRequired, jobAppData, setJobAppData) => 
     case 'telephoneNumber': return <input type="tel" required={isRequired} placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'addressOne': return addressFields(isRequired);
     case 'age': return <input type="number" min={0} max="150" required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'ssn': return <input type="text" maxLength={9} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'usCitizenship': return yesNoField('usCitizenship');
-    case 'driversLicense': return yesNoField('driversLicense');
-    case 'resume': return <input type="file" readOnly/>;
-    case 'coverLetter': return <input type="file" readOnly/>;
-    case 'certifications': return <textarea maxLength={500} required={isRequired}/>;
-    case 'militaryVeteranStatus': return yesNoField('military');
-    case 'desiredSalaryRange': return <input type="text" maxLength={50} required={isRequired} />;
-    case 'contactPreviousEmployer': return yesNoField('contactEmployer');
-    case 'skills': return <textarea required={isRequired} />;
+    case 'ssn': return <input type="password" maxLength={9} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'usCitizenship': return yesNoField('usCitizenship', name, jobAppData, setJobAppData);
+    case 'driversLicense': return yesNoField('driversLicense', name, jobAppData, setJobAppData);
+    case 'resume': return <input type="file" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'coverLetter': return <input type="file" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'certifications': return <textarea maxLength={500} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'militaryVeteranStatus': return yesNoField('military', name, jobAppData, setJobAppData);
+    case 'desiredSalaryRange': return <input type="text" maxLength={30} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'contactPreviousEmployer': return yesNoField('contactEmployer', name, jobAppData, setJobAppData);
+    case 'skills': return <textarea required={isRequired} maxLength={500} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'references': return references;
-    case 'hearAboutPosition': return <input type="text" required={isRequired} maxLength={50} />;
-    case 'availableStartDate': return <input type="date" readOnly/>;
+    case 'hearAboutPosition': return <input type="text" required={isRequired} maxLength={30} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    case 'availableStartDate': return <input type="date" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     default: return null;
   }
 };
 
-export const yesNoField = (index) => (
+export const yesNoField = (index, name, jobAppData, setJobAppData) => (
   <div id="yesNo-input-field">
-    <input type="radio" name={index} id="yes" value="yes"/>
+    <input type="radio" name={index} id="yes" value="yes" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />
     <label htmlFor="yes">Yes</label>
     <br />
-    <input type="radio" name={index} id="no" value="no"/>
+    <input type="radio" name={index} id="no" value="no" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />
     <label htmlFor="no">No</label>
   </div>
 );

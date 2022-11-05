@@ -145,3 +145,15 @@ button:hover {
     background: none;
     border: none;
 }
+
+.mock-link {
+    cursor:pointer;
+    color:blue;
+    text-decoration:underline;
+    font-size: 12px;
+    transition: 150ms;
+}
+
+.mock-link:hover {
+    opacity: 0.9;
+}
