@@ -17,11 +17,11 @@ export default function Apply(props) {
   const [jobAppData, setJobAppData] = React.useState({}); // Job app fields filled out by the applicant
   const [addressTwoField, setAddressTwoField] = React.useState(null);
 
-  const addSecondAddress = (isRequired) => setAddressTwoField(
+  const addSecondAddress = (name, isRequired) => setAddressTwoField(
       <div id="second-address">
-        {parser.addressFields(isRequired)}
+        {parser.addressFields(name, isRequired, jobAppData, setJobAppData)}
       </div>
-    )
+  );
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -45,15 +45,16 @@ export default function Apply(props) {
       })
   }, []);
 
-  const addressTwo = (isRequired) => (
+  const addressTwo = (name, isRequired) => (
+    isRequired ? parser.addressFields(name, isRequired, jobAppData, setJobAppData) : 
     <>
       {addressTwoField}
       {!addressTwoField &&
       <button
-        onClick={() => addSecondAddress(isRequired)}
+        onClick={() => addSecondAddress(name, isRequired)}
         className='em-global-add-btn'
       >
-        Add Another Address
+        Add
       </button>}
       {addressTwoField && removeSecondAddress()}
     </>
@@ -64,7 +65,7 @@ export default function Apply(props) {
       onClick={() => setAddressTwoField(null)}
       className='em-global-danger-btn'
     >
-      Remove Second Address
+      Remove Address
     </button>
   )
 
@@ -74,7 +75,7 @@ export default function Apply(props) {
         <div key={index} className="job-app-question">
           <strong>{parser.parseQuestionText(item.name)}</strong>
           {parser.parseInputField(item.name, item.checked, jobAppData, setJobAppData)}
-          {item.name === 'addressTwo' && addressTwo(item.checked)}
+          {item.name === 'addressTwo' && addressTwo(item.name, item.checked)}
         </div>
       )
     })
@@ -85,7 +86,7 @@ export default function Apply(props) {
       return (
         <div key={index} className="job-app-question">
           <strong>{item.question}</strong>
-          {parser.parseCustomQuestion(item.inputFieldType, item.required, index)}
+          {parser.parseCustomQuestion(item, index, jobAppData, setJobAppData)}
         </div>
       )
     })

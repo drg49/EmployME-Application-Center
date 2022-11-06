@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faSave } from '@fortawesome/free-solid-svg-icons';
 import * as api from '../../../api/authentication';
+import ChangeProfilePicture from './ChangeProfilePicture';
 
 const editIcon = <FontAwesomeIcon icon={faPencil} color="#666666" size="2x"/>
 const saveIcon = <FontAwesomeIcon icon={faSave} color="green" size="2x"/>
@@ -17,8 +18,7 @@ export default function FirstPanel({ userInfo, isEdit, setIsEdit, editData, setE
 
   const handleChange = e => setEditData({ ...editData, [e.target.name]: e.target.value });
 
-  const handleProfilePicUpdate = () => setModalState({ isOpen: true, title: 'Change Profile Picture', content: 'Place content component here' });
-
+  const handleProfilePicUpdate = () => setModalState({ isOpen: true, title: 'Change Profile Picture', content: <ChangeProfilePicture /> });
 
   return (
     <section id="first-panel">

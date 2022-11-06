@@ -8,6 +8,7 @@ export const parseQuestionText = (name) => {
     case 'emailAddress': return 'Email Address';
     case 'telephoneNumber': return 'Telephone Number';
     case 'addressOne': return 'Address';
+    case 'addressTwo': return 'Second Address';
     case 'age': return 'Age';
     case 'ssn': return 'Social Security Number';
     case 'usCitizenship': return 'Are you a US citizen?';
@@ -24,8 +25,7 @@ export const parseQuestionText = (name) => {
     case 'availableStartDate': return 'When is your available start date?';
     default: return '';
   }
-}
-
+};
 
 export const parseInputField = (name, isRequired, jobAppData, setJobAppData) => {
   switch (name) {
@@ -34,56 +34,82 @@ export const parseInputField = (name, isRequired, jobAppData, setJobAppData) => 
     case 'lastName': return <input type="text" required={isRequired} maxLength={40} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'emailAddress': return <input type="email" required={isRequired} maxLength={320} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'telephoneNumber': return <input type="tel" required={isRequired} placeholder="123-456-6789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'addressOne': return addressFields(isRequired);
+    case 'addressOne': return addressFields(name, isRequired, jobAppData, setJobAppData);
     case 'age': return <input type="number" min={0} max="150" required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'ssn': return <input type="password" maxLength={9} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'usCitizenship': return yesNoField('usCitizenship', name, jobAppData, setJobAppData);
-    case 'driversLicense': return yesNoField('driversLicense', name, jobAppData, setJobAppData);
+    case 'usCitizenship': return yesNoField('usCitizenship', name, jobAppData, setJobAppData, false);
+    case 'driversLicense': return yesNoField('driversLicense', name, jobAppData, setJobAppData, false);
     case 'resume': return <input type="file" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'coverLetter': return <input type="file" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'certifications': return <textarea maxLength={500} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'militaryVeteranStatus': return yesNoField('military', name, jobAppData, setJobAppData);
+    case 'militaryVeteranStatus': return yesNoField('military', name, jobAppData, setJobAppData, false);
     case 'desiredSalaryRange': return <input type="text" maxLength={30} required={isRequired} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
-    case 'contactPreviousEmployer': return yesNoField('contactEmployer', name, jobAppData, setJobAppData);
+    case 'contactPreviousEmployer': return yesNoField('contactEmployer', name, jobAppData, setJobAppData, false);
     case 'skills': return <textarea required={isRequired} maxLength={500} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'references': return references;
     case 'hearAboutPosition': return <input type="text" required={isRequired} maxLength={30} onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
     case 'availableStartDate': return <input type="date" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />;
+    
     default: return null;
   }
 };
 
-export const yesNoField = (index, name, jobAppData, setJobAppData) => (
-  <div id="yesNo-input-field">
-    <input type="radio" name={index} id="yes" value="yes" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />
-    <label htmlFor="yes">Yes</label>
-    <br />
-    <input type="radio" name={index} id="no" value="no" onChange={(e) => setJobAppData({ ...jobAppData, [name]: e.target.value})} />
-    <label htmlFor="no">No</label>
-  </div>
-);
+const handleCustomQuestion = (e, setJobAppData, jobAppData, item) => {
+  setJobAppData({ ...jobAppData, [`customQuestion_${item.id}`]: { [item.question]: e.target.value }});
+};
 
-export const parseCustomQuestion = (inputType, isRequired, index) => {
-  switch (inputType) {
-    case 'shortText': return <input type="text" required={isRequired} />;
-    case 'longText': return <textarea required={isRequired} />;
-    case 'yesNo': return yesNoField(index);
-    case 'number': return <input type="number" required={isRequired} />;
-    case 'date': return <input type="date" required={isRequired} />;
-    default: return <input type="text" />;
+export const parseCustomQuestion = (item, index, jobAppData, setJobAppData) => {
+  const { isRequired, inputFieldType } = item;
+  
+  switch (inputFieldType) {
+    case 'shortText': return <input type="text" required={isRequired} onChange={(e) => handleCustomQuestion(e, setJobAppData, jobAppData, item)} />;
+    case 'longText': return <textarea required={isRequired} onChange={(e) => handleCustomQuestion(e, setJobAppData, jobAppData, item)} />;
+    case 'yesNo': return yesNoField(index, `customQuestion_${item.id}`, jobAppData, setJobAppData, item);
+    case 'number': return <input type="number" required={isRequired} onChange={(e) => handleCustomQuestion(e, setJobAppData, jobAppData, item)} />;
+    case 'date': return <input type="date" required={isRequired} onChange={(e) => handleCustomQuestion(e, setJobAppData, jobAppData, item)} />;
+    
+    default: return null;
   }
 };
 
-export const addressFields = (isRequired) => (
+export const yesNoField = (index, name, jobAppData, setJobAppData, item = null) => {
+  const value = (e) => item ? { [item.question]: e.target.value } : e.target.value;
+
+  return (
+    <div id="yesNo-input-field">
+      <input type="radio" name={index} id="yes" value="yes" onChange={(e) => setJobAppData({ ...jobAppData, [name]: value(e)})} />
+      <label htmlFor="yes">Yes</label>
+      <br />
+      <input type="radio" name={index} id="no" value="no" onChange={(e) => setJobAppData({ ...jobAppData, [name]: value(e)})} />
+      <label htmlFor="no">No</label>
+    </div>
+  )
+};
+
+const handleAddressChange = (e, name, jobAppData, setJobAppData) => setJobAppData({ ...jobAppData, [name]: { ...jobAppData[name], [e.target.name]: e.target.value } })
+
+export const addressFields = (name, isRequired, jobAppData, setJobAppData) => (
   <section id="address-fields">
     <div className='flex'>
       <div>
         <strong htmlFor="main-address">Street</strong>
-        <input type="text" id="main-address" required={isRequired} maxLength={100} />
+        <input
+          type="text"
+          id="main-address"
+          required={isRequired}
+          maxLength={100}
+          name="Street"
+          onChange={(e) => handleAddressChange(e, name, jobAppData, setJobAppData)} />
       </div>
       <div>
         <strong htmlFor="city">City</strong>
-        <input type="text" id="city" required={isRequired} maxLength={50}/>
+        <input
+          type="text"
+          id="city"
+          required={isRequired}
+          maxLength={50}
+          name="City"
+          onChange={(e) => handleAddressChange(e, name, jobAppData, setJobAppData)} />
       </div>
     </div>
     <br />

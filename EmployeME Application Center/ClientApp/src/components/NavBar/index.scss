@@ -1,8 +1,16 @@
+@mixin disable-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px 16px 0px 8px;
+    @include disable-select();
+
 
     ul{
         display: flex;
